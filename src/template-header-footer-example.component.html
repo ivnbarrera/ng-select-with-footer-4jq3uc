@@ -1,0 +1,29 @@
+<p>Custom header and footer using <b>ng-header-tmp</b> and <b>ng-footer-tmp</b></p>
+
+<ng-select [multiple]="true" [items]="people" [(ngModel)]="selectedPeople" placeholder="Select people" bindLabel="name"
+	bindValue="name">
+	<ng-template ng-header-tmp>
+			<input type="checkbox"  (change)="toggleCheckAll($event)"/> Selected count: {{selectedPeople.length}}
+	</ng-template>
+  <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+        <div class="ng-value" *ngFor="let item of items | slice:0:2">
+            <span class="ng-value-label">{{item.name}}{{item.login}}</span>
+            <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+        </div>
+        <div class="ng-value" *ngIf="items.length > 2">
+            <span class="ng-value-label">{{items.length - 2}} more...</span>
+        </div>
+    </ng-template>
+	<ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+		<input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{item.name}}
+    </ng-template>
+		<ng-template ng-footer-tmp>
+
+			<button (click)="selectAll()" class="btn btn-sm btn-secondary">Apply</button>
+			<button (click)="unselectAll()" class="btn btn-sm btn-secondary">Cancel</button>
+		</ng-template>
+</ng-select>
+
+<br>
+
+Selected people: {{selectedPeople}}
